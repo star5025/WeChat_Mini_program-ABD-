@@ -1,41 +1,34 @@
 import { VantComponent } from '../common/component';
+import { useChildren } from '../common/relation';
 VantComponent({
-  relation: {
-    name: 'sidebar-item',
-    type: 'descendant',
-    current: 'sidebar',
-    linked() {
-      this.setActive(this.data.activeKey);
+    relation: useChildren('sidebar-item', function () {
+        this.setActive(this.data.activeKey);
+    }),
+    props: {
+        activeKey: {
+            type: Number,
+            value: 0,
+            observer: 'setActive',
+        },
     },
-    unlinked() {
-      this.setActive(this.data.activeKey);
+    beforeCreate() {
+        this.currentActive = -1;
     },
-  },
-  props: {
-    activeKey: {
-      type: Number,
-      value: 0,
-      observer: 'setActive',
+    methods: {
+        setActive(activeKey) {
+            const { children, currentActive } = this;
+            if (!children.length) {
+                return Promise.resolve();
+            }
+            this.currentActive = activeKey;
+            const stack = [];
+            if (currentActive !== activeKey && children[currentActive]) {
+                stack.push(children[currentActive].setActive(false));
+            }
+            if (children[activeKey]) {
+                stack.push(children[activeKey].setActive(true));
+            }
+            return Promise.all(stack);
+        },
     },
-  },
-  beforeCreate() {
-    this.currentActive = -1;
-  },
-  methods: {
-    setActive(activeKey) {
-      const { children, currentActive } = this;
-      if (!children.length) {
-        return Promise.resolve();
-      }
-      this.currentActive = activeKey;
-      const stack = [];
-      if (currentActive !== activeKey && children[currentActive]) {
-        stack.push(children[currentActive].setActive(false));
-      }
-      if (children[activeKey]) {
-        stack.push(children[activeKey].setActive(true));
-      }
-      return Promise.all(stack);
-    },
-  },
 });

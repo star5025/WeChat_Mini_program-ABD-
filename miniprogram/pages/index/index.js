@@ -1,66 +1,60 @@
-// pages/index/index.js
+// // pages/index/index.js
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
+    // 下拉菜单
+    selectTime: [
+        {text: "默认时间", value: 0},
+        {text: "发布时间", value: 1},
+        {text: "会议时间", value: 2}
+    ],
+    selectLocation: [
+        {text: "地区", value: 'a'},
+        {text: "广东省", value: 'b'},
+        {text: "北京市", value: 'c'}
+    ],
+    selectType: [
+        {text: "类型", value: 'A'},
+        {text: "数学", value: 'B'},
+        {text: "计算机", value: 'C'}
+    ],
+    valueTime: 0,
+    valueLocation: 'a',
+    valueType: 'A'
 
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady() {
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow() {
 
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
   onHide() {
 
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload() {
 
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh() {
 
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom() {
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage() {
 
   }
 })
+
+  

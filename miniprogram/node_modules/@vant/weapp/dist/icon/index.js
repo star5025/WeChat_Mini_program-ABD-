@@ -1,27 +1,21 @@
 import { VantComponent } from '../common/component';
 VantComponent({
-  props: {
-    dot: Boolean,
-    info: null,
-    size: null,
-    color: String,
-    customStyle: String,
-    classPrefix: {
-      type: String,
-      value: 'van-icon',
+    classes: ['info-class'],
+    props: {
+        dot: Boolean,
+        info: null,
+        size: null,
+        color: String,
+        customStyle: String,
+        classPrefix: {
+            type: String,
+            value: 'van-icon',
+        },
+        name: String,
     },
-    name: {
-      type: String,
-      observer(val) {
-        this.setData({
-          isImageName: val.indexOf('/') !== -1,
-        });
-      },
+    methods: {
+        onClick() {
+            this.$emit('click');
+        },
     },
-  },
-  methods: {
-    onClick() {
-      this.$emit('click');
-    },
-  },
 });

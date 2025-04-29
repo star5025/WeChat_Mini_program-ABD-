@@ -1,2 +1,17 @@
-<!--pages/index/index.wxml-->
-<van-button>test</van-button>
+<!-- 首页 -->
+
+<!-- 搜索栏 -->
+<van-search value="{{value}}" 
+            placeholder="请输入搜索关键词" 
+            bind:cancel="onCancel" 
+            bind:search="onSearch" />
+
+<!-- 下拉菜单 -->
+<van-dropdown-menu>
+    <van-dropdown-item value="{{valueTime}}" options="{{selectTime}}" />
+    <van-dropdown-item value="{{valueLocation}}" options="{{selectLocation}}" />
+    <van-dropdown-item value="{{valueType}}" options="{{selectType}}" />
+</van-dropdown-menu>
+
+
+

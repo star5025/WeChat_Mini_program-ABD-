@@ -1,83 +1,94 @@
-const IMAGE_REGEXP = /\.(jpeg|jpg|gif|png|svg|webp|jfif|bmp|dpg)/i;
-function isImageUrl(url) {
-  return IMAGE_REGEXP.test(url);
-}
+import { pickExclude, isPC, isWxWork } from '../common/utils';
+import { isImageUrl, isVideoUrl } from '../common/validator';
 export function isImageFile(item) {
-  if (item.type) {
-    return item.type.indexOf('image') === 0;
-  }
-  if (item.path) {
-    return isImageUrl(item.path);
-  }
-  if (item.url) {
-    return isImageUrl(item.url);
-  }
-  return false;
+    if (item.isImage != null) {
+        return item.isImage;
+    }
+    if (item.type) {
+        return item.type === 'image';
+    }
+    if (item.url) {
+        return isImageUrl(item.url);
+    }
+    return false;
 }
-export function isVideo(res, accept) {
-  return accept === 'video';
+export function isVideoFile(item) {
+    if (item.isVideo != null) {
+        return item.isVideo;
+    }
+    if (item.type) {
+        return item.type === 'video';
+    }
+    if (item.url) {
+        return isVideoUrl(item.url);
+    }
+    return false;
 }
-export function chooseFile({
-  accept,
-  multiple,
-  capture,
-  compressed,
-  maxDuration,
-  sizeType,
-  camera,
-  maxCount,
-}) {
-  switch (accept) {
-    case 'image':
-      return new Promise((resolve, reject) => {
-        wx.chooseImage({
-          count: multiple ? Math.min(maxCount, 9) : 1,
-          sourceType: capture,
-          sizeType,
-          success: resolve,
-          fail: reject,
-        });
-      });
-    case 'media':
-      return new Promise((resolve, reject) => {
-        wx.chooseMedia({
-          count: multiple ? Math.min(maxCount, 9) : 1,
-          sourceType: capture,
-          maxDuration,
-          sizeType,
-          camera,
-          success: resolve,
-          fail: reject,
-        });
-      });
-    case 'video':
-      return new Promise((resolve, reject) => {
-        wx.chooseVideo({
-          sourceType: capture,
-          compressed,
-          maxDuration,
-          camera,
-          success: resolve,
-          fail: reject,
-        });
-      });
-    default:
-      return new Promise((resolve, reject) => {
-        wx.chooseMessageFile({
-          count: multiple ? maxCount : 1,
-          type: 'file',
-          success: resolve,
-          fail: reject,
-        });
-      });
-  }
+function formatImage(res) {
+    return res.tempFiles.map((item) => (Object.assign(Object.assign({}, pickExclude(item, ['path'])), { type: 'image', url: item.tempFilePath || item.path, thumb: item.tempFilePath || item.path })));
 }
-export function isFunction(val) {
-  return typeof val === 'function';
+function formatVideo(res) {
+    return [
+        Object.assign(Object.assign({}, pickExclude(res, ['tempFilePath', 'thumbTempFilePath', 'errMsg'])), { type: 'video', url: res.tempFilePath, thumb: res.thumbTempFilePath }),
+    ];
 }
-export function isObject(val) {
-  return val !== null && typeof val === 'object';
+function formatMedia(res) {
+    return res.tempFiles.map((item) => (Object.assign(Object.assign({}, pickExclude(item, ['fileType', 'thumbTempFilePath', 'tempFilePath'])), { type: item.fileType, url: item.tempFilePath, thumb: item.fileType === 'video' ? item.thumbTempFilePath : item.tempFilePath })));
 }
-export function isPromise(val) {
-  return isObject(val) && isFunction(val.then) && isFunction(val.catch);
+function formatFile(res) {
+    return res.tempFiles.map((item) => (Object.assign(Object.assign({}, pickExclude(item, ['path'])), { url: item.path })));
+}
+export function chooseFile({ accept, multiple, capture, compressed, maxDuration, sizeType, camera, maxCount, mediaType, extension, }) {
+    return new Promise((resolve, reject) => {
+        switch (accept) {
+            case 'image':
+                if (isPC || isWxWork) {
+                    wx.chooseImage({
+                        count: multiple ? Math.min(maxCount, 9) : 1,
+                        sourceType: capture,
+                        sizeType,
+                        success: (res) => resolve(formatImage(res)),
+                        fail: reject,
+                    });
+                }
+                else {
+                    wx.chooseMedia({
+                        count: multiple ? Math.min(maxCount, 9) : 1,
+                        mediaType: ['image'],
+                        sourceType: capture,
+                        maxDuration,
+                        sizeType,
+                        camera,
+                        success: (res) => resolve(formatImage(res)),
+                        fail: reject,
+                    });
+                }
+                break;
+            case 'media':
+                wx.chooseMedia({
+                    count: multiple ? Math.min(maxCount, 9) : 1,
+                    mediaType,
+                    sourceType: capture,
+                    maxDuration,
+                    sizeType,
+                    camera,
+                    success: (res) => resolve(formatMedia(res)),
+                    fail: reject,
+                });
+                break;
+            case 'video':
+                wx.chooseVideo({
+                    sourceType: capture,
+                    compressed,
+                    maxDuration,
+                    camera,
+                    success: (res) => resolve(formatVideo(res)),
+                    fail: reject,
+                });
+                break;
+            default:
+                wx.chooseMessageFile(Object.assign(Object.assign({ count: multiple ? maxCount : 1, type: accept }, (extension ? { extension } : {})), { success: (res) => resolve(formatFile(res)), fail: reject }));
+                break;
+        }
+    });
 }

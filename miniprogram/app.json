@@ -4,28 +4,34 @@
     "pages/publish/publish",
     "pages/info/info"
   ],
+  "tabBar": {
+      "list": [{
+          "pagePath": "pages/index/index",
+          "text": "首页",
+          "iconPath": "assets/icon/wap-home-o.png",
+          "selectedIconPath": "assets/icon/wap-home.png"
+      }, {
+          "pagePath": "pages/publish/publish",
+          "text": "发布",
+          "iconPath": "assets/icon/add-o.png",
+          "selectedIconPath": "assets/icon/add.png"
+      }, {
+          "pagePath": "pages/info/info",
+          "text": "个人信息",
+          "iconPath": "assets/icon/info-o.png",
+          "selectedIconPath": "assets/icon/info.png"
+      }
+
+      ]
+  },
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTextStyle": "black"
   },
-  "tabBar": {
-      "list": [{
-        "pagePath": "pages/index/index",
-        "text": "首页"
-      }, {
-          "pagePath": "pages/publish/publish",
-          "text": "发布"
-      }, {
-          "pagePath": "pages/info/info",
-          "text": "个人信息"
-      }
-    ]
-  },
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
-  "usingComponents": {
-    "van-button": "@vant/weapp/button/index"
-  }
+
+    "usingComponents": {}
 }
