@@ -1,1 +1,4 @@
 /* pages/publish/publish.wxss */
+.container1 view{
+    margin: 4px;
+}

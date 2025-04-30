@@ -1,2 +1,64 @@
 <!-- 发布 -->
+<!--pages/publish/publish.wxml-->
+<van-cell-group class = "container1">
+  <van-field 
+    value="{{ username }}"
+    required
+    clearable
+    label="会议名称"
+    icon="question-o"
+    placeholder="请输入"
+    bind:change="onChange"
+    bind:click-icon="onClickIcon"
+  />
+</van-cell-group>
+
+
+<van-uploader file-list="{{ fileList }}"   max-count="3"  bind:after-read="afterRead"/>
+
+
+<van-cell title="开始日期" value="{{ date }}" bind:click="onDisplay" class="container1" required is-link/>
+<van-calendar show="{{ show }}" bind:close="onClose" bind:confirm="onConfirm" />
+<van-cell title="结束日期" value="{{ date }}" bind:click="onDisplay" class="container1" required is-link/>
+<van-calendar show="{{ show }}" bind:close="onClose" bind:confirm="onConfirm" />
+
+
+<van-cell-group class = "container1">
+  <van-field
+    value="{{ username }}"
+    required
+    clearable
+    label="地点"
+    placeholder="请输入"
+    bind:change="onChange"
+  />
+  <van-field
+    value="{{ username }}"
+    clearable
+    label="与会人员"
+    placeholder="请输入"
+    bind:change="onChange"
+  />
+  <van-field
+    value="{{ username }}"
+    required
+    clearable
+    label="会议类型"
+    placeholder="请输入"
+    bind:change="onChange"
+  />
+  <van-field
+    value="{{ username }}"
+    required
+    clearable
+    label="会议介绍"
+    placeholder="请输入"
+    bind:change="onChange"
+    type="textarea"
+    autosize
+  />
+</van-cell-group>
+
+
+
 

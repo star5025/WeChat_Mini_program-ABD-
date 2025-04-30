@@ -1,5 +1,11 @@
 {
-  "usingComponents": {},
-
+    "usingComponents": {
+      "van-field": "@vant/weapp/field/index",
+      "van-uploader": "@vant/weapp/uploader/index",
+      "van-calendar": "@vant/weapp/calendar/index",
+      "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index"
+  },
+  
   "navigationBarTitleText": "发布"
 }
