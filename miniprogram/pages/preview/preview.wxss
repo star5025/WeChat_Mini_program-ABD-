@@ -1,0 +1,17 @@
+/* pages/preview/preview.wxss */
+
+.title{
+    font-size: 80rpx;
+    text-align: center; /*字体居中*/
+}
+
+.title_font{
+    font-size: 40rpx;
+    font-weight: bolder; /*字体加粗*/
+    text-align: center; /*字体居中*/
+}
+
+.type-color{
+    text-align: center; /*字体居中*/
+    background-color: lightgreen;
+}

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+
+        "van-image": "@vant/weapp/image/index"
+      
+  },
+  "navigationBarTitleText": "预览"
+}
+
