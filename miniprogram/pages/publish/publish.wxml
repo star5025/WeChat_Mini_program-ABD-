@@ -1,5 +1,9 @@
 <!-- 发布 -->
 <!--pages/publish/publish.wxml-->
+
+<!-- 按钮置底还没写 -->
+<view class="container3">
+
 <van-cell-group class = "container1">
   <van-field 
     value="{{ username }}"
@@ -17,13 +21,20 @@
 <van-uploader file-list="{{ fileList }}"   max-count="3"  bind:after-read="afterRead"/>
 
 
-<van-cell title="开始日期" value="{{ date }}" bind:click="onDisplay" class="container1" required is-link/>
+<van-cell title="会议时间" value="{{ date }}" bind:click="onDisplay" class="container1" required is-link/>
 <van-calendar show="{{ show }}" bind:close="onClose" bind:confirm="onConfirm" />
-<van-cell title="结束日期" value="{{ date }}" bind:click="onDisplay" class="container1" required is-link/>
-<van-calendar show="{{ show }}" bind:close="onClose" bind:confirm="onConfirm" />
+
 
 
 <van-cell-group class = "container1">
+    <van-field
+    value="{{ username }}"
+    required
+    clearable
+    label="具体时间"
+    placeholder="请输入"
+    bind:change="onChange"
+  />
   <van-field
     value="{{ username }}"
     required
@@ -34,6 +45,7 @@
   />
   <van-field
     value="{{ username }}"
+    required
     clearable
     label="与会人员"
     placeholder="请输入"
@@ -57,8 +69,23 @@
     type="textarea"
     autosize
   />
+  <van-field
+    value="{{ username }}"
+    clearable
+    label="备注"
+    placeholder="请输入"
+    bind:change="onChange"
+    type="textarea"
+    autosize
+  />
 </van-cell-group>
 
 
+</view>
 
 
+<!-- 保存按钮还没写 -->
+<van-cell-group class ="container2" border="{{ false }}">
+<van-button plain type="primary" size="normal" class="botton1">保存</van-button>
+<van-button plain type="info" size="normal" class="botton1" bindtap="navigateToPreview">预览</van-button>
+</van-cell-group>

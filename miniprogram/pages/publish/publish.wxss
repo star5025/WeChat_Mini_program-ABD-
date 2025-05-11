@@ -1,4 +1,23 @@
 /* pages/publish/publish.wxss */
+/*表格格式*/
 .container1 view{
-    margin: 4px;
+    margin: 8rpx;
+}
+
+/*按钮居中格式*/
+.container2 {
+    width: 750rpx;
+    display: flex; /* 启用 flex 布局 */
+    justify-content: space-around; /* 使子元素两端对齐，元素间间距平均分布 */
+    align-items: center; /* 垂直方向居中（好像没用） */
+  }
+
+/*按钮置底（尚未完成）*/
+  .container3 {
+    flex: 1;
+}
+
+/*按钮格式*/
+.botton1{
+    margin: 80rpx;
 }

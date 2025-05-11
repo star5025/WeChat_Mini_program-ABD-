@@ -47,7 +47,7 @@ Page({
     },
   
   
-  //日历函数（暂未启用)
+  //日历函数
   onDisplay() {
       this.setData({ show: true });
     },
@@ -65,6 +65,20 @@ Page({
       });
     },
   
+//跳转到预览界面的函数
+    navigateToPreview: function() {
+    wx.navigateTo({
+      url: '/pages/preview/preview',
+      success: function(res) {
+        // 跳转成功的回调函数
+        console.log('跳转成功');
+      },
+      fail: function(err) {
+        // 跳转失败的回调函数
+        console.error('跳转失败:', err);
+      }
+    });
+  },
   
     /**
      * 生命周期函数--监听页面加载
