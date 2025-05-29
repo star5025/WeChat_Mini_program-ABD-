@@ -1,15 +1,47 @@
 <!--pages/preview/preview.wxml-->
-<view class="type-color"> {{type}}会议</view>
+
+<!-- 基础空行 -->
+<view style="height: 20rpx;"></view>
+
 
 
 <rich-text nodes="{{title}}" class="title"></rich-text>
+
+
+<!-- 文本显示 -->
+<rich-text class="view-text" nodes="时间:{{date}}{{' '}}{{time}}"></rich-text>
+
+<!-- 边界 -->
+<view class="boundary">
+
+<view class="normal-text">
+  <view class="label">会议类型:</view>
+  <view>{{type}}</view>
+</view>
+<view class="normal-text">
+  <view class="label">地点:</view>
+  <view>{{place}}</view>
+</view>
+<view class="normal-text">
+  <view class="label">与会人员:</view>
+  <view>{{members}}</view>
+</view>
+<view class="normal-text">
+  <view class="label">会议介绍:</view>
+</view>
+<rich-text class="normal-text" nodes="{{introduction}}"></rich-text>
+
+<!-- 基础空行 -->
+<view style="height: 20rpx;"></view>
+
+</view>
 
 <!-- 图片 -->
 <!-- 轮播图结构 -->
 <swiper class="swiper-container" indicator-dots indicator-color="white" indicator-active-color="gray" autoplay interval="3000" circular>
 <!-- 第一个轮播图 -->
 <swiper-item>
-  <view><van-image width="750rpx" height="150" src="https://img.yzcdn.cn/vant/cat.jpeg" /></view>
+  <view><van-image width="750rpx" height="150" src="https://img.yzcdn.cn/vant/cat.jpeg"/></view>
 </swiper-item>
 <!-- 第二个轮播图 -->
 <swiper-item>
@@ -20,26 +52,4 @@
   <view></view>
 </swiper-item>
 </swiper>
-
-
-<!-- 基础空行 -->
-<view style="height: 40rpx;"></view>
-
-<!-- 文本显示 -->
-<rich-text class="title_font" nodes="时间:{{date}}"></rich-text>
-
-<rich-text class="title_font" nodes="{{time}}"></rich-text>
-
-<!-- 基础空行 -->
-<view style="height: 20rpx;"></view>
-
-<rich-text class="title_font" nodes="地点:{{place}}">
-</rich-text>
-
-<rich-text class="title_font" nodes="与会人员:{{members}}">
-</rich-text>
-
-<!-- 基础空行 -->
-<view style="height: 40rpx;"></view>
-
 

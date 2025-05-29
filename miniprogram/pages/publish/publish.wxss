@@ -15,6 +15,7 @@
 /*按钮置底（尚未完成）*/
   .container3 {
     flex: 1;
+    margin: 10rpx 10rpx 10rpx 10rpx;
 }
 
 /*按钮格式*/
