@@ -15,12 +15,12 @@
 <view class="boundary">
 
 <view class="normal-text">
-  <view class="label">会议类型:</view>
-  <view>{{type}}</view>
-</view>
-<view class="normal-text">
   <view class="label">地点:</view>
   <view>{{place}}</view>
+</view>
+<view class="normal-text">
+  <view class="label">会议类型:</view>
+  <view>{{type}}</view>
 </view>
 <view class="normal-text">
   <view class="label">与会人员:</view>

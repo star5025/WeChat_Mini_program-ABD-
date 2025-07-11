@@ -4,76 +4,103 @@
 <!-- 按钮置底还没写 -->
 <view class="container3">
 
+<!-- 会议名称 -->
 <van-cell-group class = "container1">
   <van-field 
-    value="{{ username }}"
+    model:value="{{ formData.title }}"
     required
     clearable
     label="会议名称"
     icon="question-o"
+    data-field = 'title'
     placeholder="请输入"
+    bind:input='onFieldInput'
     bind:change="onChange"
     bind:click-icon="onClickIcon"
   />
 </van-cell-group>
 
+<!-- 图片 -->
+<van-uploader file-list="{{ fileList }}"  deletable="{{ true }}" max-count="3"  bind:after-read="afterRead"/>
 
-<van-uploader file-list="{{ fileList }}"   max-count="3"  bind:after-read="afterRead"/>
-
-
+<!-- 会议时间 -->
 <van-cell title="会议时间" value="{{ date }}" bind:click="onDisplay" class="container1" required is-link/>
 <van-calendar show="{{ show }}" bind:close="onClose" bind:confirm="onConfirm" />
 
 
 
 <van-cell-group class = "container1">
+
+<!-- 具体时间 -->
     <van-field
-    value="{{ username }}"
+    model:value="{{ formData.timeDetail }}"
     required
     clearable
     label="具体时间"
+    data-field = 'timeDetail'
     placeholder="请输入"
+    bind:input="onFieldInput"
     bind:change="onChange"
   />
+
+  <!-- 地点 -->
   <van-field
-    value="{{ username }}"
+    model:value="{{ formData.place }}"
     required
     clearable
     label="地点"
+    data-field = 'place'
     placeholder="请输入"
+    bind:input="onFieldInput"
     bind:change="onChange"
   />
+
+  <!-- 与会人员 -->
   <van-field
-    value="{{ username }}"
+    model:value="{{ formData.members }}"
     required
     clearable
     label="与会人员"
+    data-field = 'members'
     placeholder="请输入"
+    bind:input="onFieldInput"
     bind:change="onChange"
   />
+
+  <!-- 会议类型 -->
   <van-field
-    value="{{ username }}"
+    model:value="{{ formData.type }}"
     required
     clearable
     label="会议类型"
+    data-field = 'type'
     placeholder="请输入"
+    bind:input="onFieldInput"
     bind:change="onChange"
   />
+
+  <!-- 会议介绍 -->
   <van-field
-    value="{{ username }}"
+    model:value="{{ formData.introduction }}"
     required
     clearable
     label="会议介绍"
+    data-field = 'introduction'
     placeholder="请输入"
+    bind:input="onFieldInput"
     bind:change="onChange"
     type="textarea"
     autosize
   />
+
+  <!-- 备注 -->
   <van-field
     value="{{ username }}"
     clearable
     label="备注"
+    data-field = 'beiZhu'
     placeholder="请输入"
+    bind:input="onFieldInput"
     bind:change="onChange"
     type="textarea"
     autosize
@@ -84,8 +111,8 @@
 </view>
 
 
-<!-- 保存按钮还没写 -->
+<!-- 保存和预览按钮 -->
 <van-cell-group class ="container2" border="{{ false }}">
-<van-button plain type="primary" size="normal" class="botton1">保存</van-button>
+<van-button plain type="primary" size="normal" class="botton1" bindtap='save'>保存</van-button>
 <van-button plain type="info" size="normal" class="botton1" bindtap="navigateToPreview">预览</van-button>
 </van-cell-group>
