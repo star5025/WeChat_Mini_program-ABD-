@@ -11,7 +11,8 @@ Page({
     time: "",      // 来自具体时间字段
     place: "",
     members: "",
-    introduction: ""
+    introduction: "",
+    fileList: ""
   },
 /**
  更多introduction示例：<br/><br/>会议议程丰富多元，不仅设有主旨演讲环节，邀请学界泰斗分享能源可再生利用的宏观战略与前瞻性观点；还安排了专题研讨，涵盖可再生能源材料创新、智能电网融合、生态环境影响评估等细分领域。参会者可在互动交流环节与讲者深度对话，碰撞思想火花。此外，会议设置的成果展览区，将展示最新科研设备、创新技术模型及优秀学术论文摘要，方便与会者直观了解行业进展。<br/><br/>本次会议对于推动能源领域学术研究进展、促进科研成果转化应用意义重大。它将助力产学研深度融合，加速可再生能源技术迭代升级，为全球能源可持续发展贡献智慧与方案，引领行业迈向更加清洁、高效、安全的未来。
@@ -22,46 +23,42 @@ Page({
    */
 
   onLoad(options) {
-    // 解码所有URL参数
-    const decodeParams = (params) => {
-      const decoded = {};
-      for (const key in params) {
-        try {
-          // 尝试解码参数
-          decoded[key] = decodeURIComponent(params[key]);
-        } catch (e) {
-          // 解码失败则使用原始值
-          decoded[key] = params[key];
-        }
+    // 统一解码函数
+    const decodeParam = (value, defaultValue) => {
+      try {
+        return value ? decodeURIComponent(value) : defaultValue;
+      } catch (e) {
+        return value || defaultValue;
       }
-      return decoded;
     };
-    
-    // 解码整个options对象
-    const decodedOptions = decodeParams(options);
-    
-    // 使用解码后的参数
-    const {
-      title = "关于能源可再生利用的最新研究",
-      type = "环境",
-      date = "2025/5/20",
-      time = "从下午两点到下午四点半",
-      place = "浙江温州江南皮革厂",
-      members = "欢，熹，茶",
-      introduction = '在全球积极应对气候变化、加速能源转型的大背景下...'
-    } = decodedOptions;
-    
-    // 处理换行符
-    const processedIntro = introduction.replace(/<br\/?>/g, '\n');
-    
+  
+    // 解析fileList
+    let fileList = [];
+    try {
+      if (options.fileList) {
+        // 双层解析：先解码再转为对象
+        const decoded = decodeURIComponent(options.fileList);
+        fileList = JSON.parse(decoded).map(item => ({
+          ...item,
+          // 修正路径属性名
+          url: item.tempFilePath || item.url
+        }));
+      }
+    } catch (e) {
+      console.error("fileList解析失败:", e);
+    }
+  
+    // 设置数据
     this.setData({
-      title,
-      type,
-      date: date.replace(/\//g, '/'), // 确保日期显示正常
-      time,
-      place,
-      members,
-      introduction: processedIntro
+      title: decodeParam(options.title, "默认标题"),
+      type: decodeParam(options.type, "默认类型"),
+      date: decodeParam(options.date, ""),
+      time: decodeParam(options.time, "未设置时间"), // 修复undefined
+      place: decodeParam(options.place, ""),
+      members: decodeParam(options.members, ""),
+      introduction: decodeParam(options.introduction, "")
+        .replace(/<br\/?>/g, '\n'),
+      fileList
     });
   },
 

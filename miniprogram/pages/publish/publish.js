@@ -11,18 +11,19 @@ Page({
         title: '',
         type: '',
         date: '',       // 从日历选择器获取
-        timeDetail: '', // 具体时间输入框
+        time: '', // 具体时间输入框
         place: '',
         members: '',
         introduction: ''
       },
       //图片
-        fileList: [{
-          url: 'https://img.yzcdn.cn/vant/leaf.jpg',//这是一个固定的URL
-          name: '图片1',
-          isImage: true,
-          deletable: true,
-        },
+        fileList: [
+        // {
+        //   url: 'https://img.yzcdn.cn/vant/leaf.jpg',//这是一个固定的URL
+        //   name: '图片1',
+        //   isImage: true,
+        //   deletable: true,
+        // },
         // Uploader 根据文件后缀来判断是否为图片文件
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
       ],
@@ -32,30 +33,70 @@ Page({
       show: false,
     },
   
-   //图片上传函数
-   afterRead(event) {
-      const { file } = event.detail;
-      // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-      wx.uploadFile({
-        url: 'https://example.weixin.qq.com/upload', // 仅为示例，非真实的接口地址
-        filePath: file.url,
-        name: 'file',
-        formData: { user: 'test' },
-        success(res) {
+//    //图片上传函数
+// uploadToCloud(event) {
+//     const { file } = event.detail;
+//     wx.chooseMedia({
+//         count: 9,
+//         success:res=>{
+//             console.log(res)
+//             var filePath=res.tempFiles[0].tempFilePath
+//             var fileName=Date.now();
+//             console.log(filePath,fileName)
+//             this.cloudFile(fileName,filePath,file)
+//         }
+//     })
+//   },
+  
+//   cloudFile(fileName, chooseResult,file) {
+//     wx.showLoading({
+//       title: '上传中',
+//     })
+//     wx.cloud.uploadFile({
+//       cloudPath: fileName+'.jpg',
+//       filePath: chooseResult
+//     }).then(res=>{
+//         console.log(res)
+//         // 上传完成需要更新 fileList
+//         const { fileList = [] } = this.data;
+//         fileList.push({ ...file, url: res.data });
+//         this.setData({ fileList });
+//     })
+//     wx.hideLoading()
+//   },
+  
+  // 上传图片
+afterRead(event) {
+    const { file } = event.detail;
+    console.log(file)
+    // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+    wx.showLoading({
+        title: '上传中',
+      })
+      wx.cloud.uploadFile({
+        cloudPath: Date.now()+'.jpg',
+        filePath: file.tempFilePath
+      }).then(res=>{
+          console.log(res)
           // 上传完成需要更新 fileList
           const { fileList = [] } = this.data;
-          fileList.push({ ...file, url: res.data });
+          fileList.push({ url: res.fileID});
           this.setData({ fileList });
-        },
-      });
+      })
+      wx.hideLoading()
+      console.log(this.data.fileList)
   },
-  
+
+
+
     // 开发时调试用，实际运行时可删除
   onChange(event) {
       // event.detail 为当前输入的值
       console.log(event.detail);
     },
   
+
+
 
  // 统一处理所有字段输入
  onFieldInput(e) {
@@ -79,6 +120,10 @@ Page({
       date = new Date(date);
       return `${date.getMonth() + 1}/${date.getDate()}`;
     },
+
+
+
+
  // 日历确认时更新数据
  onConfirm(event) {
     this.setData({
@@ -88,22 +133,28 @@ Page({
     });
   },
 
+
+
+  
 //保存函数
 save(){
     const params = {
         title: encodeURIComponent(this.data.formData.title),
         type: encodeURIComponent(this.data.formData.type),
         date: encodeURIComponent(this.data.formData.date),
-        time: encodeURIComponent(this.data.formData.timeDetail),
+        time: encodeURIComponent(this.data.formData.time),
         place: encodeURIComponent(this.data.formData.place),
         members: encodeURIComponent(this.data.formData.members),
-        introduction: encodeURIComponent(this.data.formData.introduction)
+        introduction: encodeURIComponent(this.data.formData.introduction),
+        fileList: encodeURIComponent(JSON.stringify(this.data.fileList))
       };
      // 构建URL参数
     const query = Object.keys(params)
       .map(key => `${key}=${params[key]}`)
       .join('&');
     // 开发时调试用，实际运行时可删除
+
+//下面这段之前的都是可有可无的
     wx.showLoading({
         title:'数据上传中',
         mask:true
@@ -117,6 +168,7 @@ save(){
             place: this.data.formData.place,
             members: this.data.formData.members,
             introduction: this.data.formData.introduction,
+            fileList: this.data.fileList,
             query: query
         }
     }).then(res=>{
@@ -126,8 +178,11 @@ save(){
 },
 
 
+
+
 //跳转到预览界面的函数
     navigateToPreview: function() {
+        console.log(this.data.fileList)
         // 中文不能直接传参，使用encode
         const params = {
             title: encodeURIComponent(this.data.formData.title),
@@ -136,7 +191,8 @@ save(){
             time: encodeURIComponent(this.data.formData.timeDetail),
             place: encodeURIComponent(this.data.formData.place),
             members: encodeURIComponent(this.data.formData.members),
-            introduction: encodeURIComponent(this.data.formData.introduction)
+            introduction: encodeURIComponent(this.data.formData.introduction),
+            fileList: encodeURIComponent(JSON.stringify(this.data.fileList))
           };
          // 构建URL参数
         const query = Object.keys(params)

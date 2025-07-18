@@ -14,4 +14,13 @@
 </van-dropdown-menu>
 
 
+<!-- 消息展示框 -->
+<view bindtap="clickRow" class="row"
+ data-id="{{item._id}}"
+ data-idx="{{index}}"
+ wx:for="{{dataList}}" wx:key="index">
+    <view class="title">{{item.title}}</view>
+    <view>与会人员：{{item.members}}</view>
+</view>
+
 

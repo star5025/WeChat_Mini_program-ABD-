@@ -2,6 +2,8 @@
 Page({
 
   data: {
+      //数据表
+      dataList:[],
     // 下拉菜单
     selectTime: [
         {text: "默认时间", value: 0},
@@ -24,8 +26,53 @@ Page({
 
   },
 
-  onLoad(options) {
 
+  //下拉刷新获取数据
+  getData(num=4,page=0){
+      wx.cloud.callFunction({
+        name:"getMessage",
+        data:{
+            num:num,
+            page:page
+        }
+      }).then(res=>{
+        var oldData=this.data.dataList
+        var newData=oldData.concat(res.result.data);
+        this.setData({
+            dataList:newData
+        })
+      })
+  },
+
+
+  //点击事件
+  clickRow(res){
+    var {id,idx}=res.currentTarget.dataset
+    wx.cloud.callFunction({
+        name:"visitMessage",
+        data:{
+            id:id,
+        }
+    }).then(res=>{
+        console.log(res.result.data)
+        console.log(id)
+        wx.navigateTo({
+            url: `/pages/message/message?id=` + id,
+              success: function(res) {
+                // 跳转成功的回调函数
+                console.log('跳转成功');
+              },
+              fail: function(err) {
+                // 跳转失败的回调函数
+                console.error('跳转失败:', err);
+              }
+            });
+      })
+  },
+
+//每次加载执行此函数
+  onLoad(options) {
+        this.getData()
   },
 
   onReady() {
@@ -49,7 +96,8 @@ Page({
   },
 
   onReachBottom() {
-
+    var page=this.data.dataList.length
+    this.getData(3,page)
   },
 
   onShareAppMessage() {

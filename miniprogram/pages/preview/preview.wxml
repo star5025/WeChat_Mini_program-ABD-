@@ -38,18 +38,26 @@
 
 <!-- 图片 -->
 <!-- 轮播图结构 -->
-<swiper class="swiper-container" indicator-dots indicator-color="white" indicator-active-color="gray" autoplay interval="3000" circular>
-<!-- 第一个轮播图 -->
-<swiper-item>
-  <view><van-image width="750rpx" height="150" src="https://img.yzcdn.cn/vant/cat.jpeg"/></view>
-</swiper-item>
-<!-- 第二个轮播图 -->
-<swiper-item>
-  <view></view>
-</swiper-item>
-<!-- 第三个轮播图 -->
-<swiper-item>
-  <view></view>
-</swiper-item>
+<!-- 动态渲染轮播图 -->
+<swiper class="swiper-container" 
+        indicator-dots 
+        autoplay 
+        interval="3000"
+        style="height: 300rpx;">
+  <block wx:for="{{fileList}}" wx:key="url">
+    <swiper-item>
+      <image 
+        src="{{item.url}}" 
+        mode="aspectFill" 
+        style="width:100%;height:100%;" 
+      />
+    </swiper-item>
+  </block>
+  
+  <!-- 无图时显示占位 -->
+  <block wx:if="{{fileList.length === 0}}">
+    <swiper-item>
+      <view class="placeholder">暂无图片</view>
+    </swiper-item>
+  </block>
 </swiper>
-

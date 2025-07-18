@@ -44,6 +44,17 @@
     padding: 20rpx 20rpx 5rpx 20rpx;/*内边距*/
 }
 
-.swiper-container{
-    margin:0rpx 20rpx 10rpx 20rpx;
-}
+/* 确保轮播图容器有明确高度 */
+.swiper-container {
+    background-color: #f5f5f5;
+    border-radius: 8rpx;
+    margin: 20rpx 0;
+  }
+  
+  .placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #999;
+  }
