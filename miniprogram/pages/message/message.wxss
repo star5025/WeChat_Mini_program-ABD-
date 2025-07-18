@@ -1,0 +1,60 @@
+/* pages/message/message.wxss */
+
+.title {
+    font-size: 42rpx; /* 标题字号通常较大，36rpx约等于18px */
+    font-family: SimHei;
+    font-weight: bold; /* 加粗字体 */
+    color: #333; /* 深灰色文字，比正文更突出 */
+    line-height: 1.2; /* 紧凑的行高，突出标题 */
+    margin-bottom: 16rpx; /* 与下方内容的间距 */
+    text-align: center; /*字体居中*/
+  }
+
+.view-text{
+    font-size: 24rpx; /* 字号，rpx是微信小程序的尺寸单位，可根据实际调整，24rpx是比较常见的小字号 */
+    color: #999; /* 灰色，#999是常见的浅灰色颜色值，可按需调整 */
+    line-height: 1.4; /* 行高，让文字排版更舒适 */
+    text-align: center; /*字体居中*/
+}
+
+.label {
+    font-weight: bold;
+    margin-right: 5rpx;
+  }
+  
+.normal-text {
+    font-size: 30rpx; /* 字号适中，30rpx 是比较常用的尺寸，可根据实际调整 */
+    font-weight: 400; /* 普通粗细，400 对应常规字体粗细 */
+    color: #333; /* 深灰色文字，接近黑色，显示清晰 */
+    line-height: 1.6; /* 行高适中，让文字阅读更舒适 */
+    display: flex;
+    align-items: center; /* 垂直方向居中对齐 */
+  }
+
+
+.type-text{
+    text-align: center; /*字体居中*/
+    background-color: lightgreen;
+    font-size: 24rpx; /* 字号适中，30rpx 是比较常用的尺寸，可根据实际调整 */
+}
+
+.boundary{
+    margin: 40rpx 20rpx 20rpx 20rpx;/*外边距*/
+    background-color: #f5f5f5;
+    padding: 20rpx 20rpx 5rpx 20rpx;/*内边距*/
+}
+
+/* 确保轮播图容器有明确高度 */
+.swiper-container {
+    background-color: #f5f5f5;
+    border-radius: 8rpx;
+    margin: 20rpx 0;
+  }
+  
+  .placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #999;
+  }

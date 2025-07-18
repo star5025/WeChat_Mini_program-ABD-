@@ -1,0 +1,63 @@
+<!--pages/message/message.wxml-->
+
+<!-- 基础空行 -->
+<view style="height: 20rpx;"></view>
+
+
+
+<rich-text nodes="{{title}}" class="title"></rich-text>
+
+
+<!-- 文本显示 -->
+<rich-text class="view-text" nodes="时间:{{date}}{{' '}}{{time}}"></rich-text>
+
+<!-- 边界 -->
+<view class="boundary">
+
+<view class="normal-text">
+  <view class="label">地点:</view>
+  <view>{{place}}</view>
+</view>
+<view class="normal-text">
+  <view class="label">会议类型:</view>
+  <view>{{type}}</view>
+</view>
+<view class="normal-text">
+  <view class="label">与会人员:</view>
+</view>
+<view>{{members}}</view>
+<view class="normal-text">
+  <view class="label">会议介绍:</view>
+</view>
+<rich-text class="normal-text" nodes="{{introduction}}"></rich-text>
+
+<!-- 基础空行 -->
+<view style="height: 20rpx;"></view>
+
+</view>
+
+<!-- 图片 -->
+<!-- 轮播图结构 -->
+<!-- 动态渲染轮播图 -->
+<swiper class="swiper-container" 
+        indicator-dots 
+        autoplay 
+        interval="3000"
+        style="height: 300rpx;">
+  <block wx:for="{{fileList}}" wx:key="url">
+    <swiper-item>
+      <image 
+        src="{{item.url}}" 
+        mode="aspectFill" 
+        style="width:100%;height:100%;" 
+      />
+    </swiper-item>
+  </block>
+  
+  <!-- 无图时显示占位 -->
+  <block wx:if="{{fileList.length === 0}}">
+    <swiper-item>
+      <view class="placeholder">暂无图片</view>
+    </swiper-item>
+  </block>
+</swiper>
